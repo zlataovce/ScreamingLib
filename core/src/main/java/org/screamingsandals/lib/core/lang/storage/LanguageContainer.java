@@ -3,17 +3,19 @@ package org.screamingsandals.lib.core.lang.storage;
 import com.google.common.base.Preconditions;
 import io.leangen.geantyref.TypeToken;
 import lombok.Data;
-import net.md_5.bungee.api.chat.TextComponent;
+import net.kyori.adventure.text.Component;
 import org.bukkit.OfflinePlayer;
 import org.screamingsandals.lib.core.config.SConfig;
 import org.screamingsandals.lib.core.papi.PlaceholderConfig;
-import org.screamingsandals.lib.core.plugin.PluginCore;
+import org.screamingsandals.lib.core.wrapper.plugin.PluginType;
+import org.screamingsandals.lib.core.wrapper.plugin.PluginWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Data
 public class LanguageContainer {
@@ -23,19 +25,19 @@ public class LanguageContainer {
     private String code;
     private String prefix;
     private PlaceholderConfig papiConfig;
-    private PluginCore pluginCore;
+    private PluginWrapper pluginWrapper;
 
     public LanguageContainer(SConfig config, LanguageContainer fallback, String code,
-                             String prefix, PlaceholderConfig papiConfig, PluginCore pluginCore) {
+                             String prefix, PlaceholderConfig papiConfig, PluginWrapper pluginWrapper) {
         this.config = Preconditions.checkNotNull(config, "config");
         this.fallback = fallback;
         this.code = Preconditions.checkNotNull(code, "code");
         this.prefix = Objects.requireNonNullElseGet(prefix, () -> Preconditions.checkNotNull(config.node("prefix").getString()));
         this.papiConfig = papiConfig;
-        this.pluginCore = pluginCore;
+        this.pluginWrapper = pluginWrapper;
     }
 
-    public List<TextComponent> getMessages(String key, boolean prefix, Map<String, Object> placeholders, UUID uuid) {
+    public List<Component> getMessages(String key, boolean prefix, Map<String, String> placeholders, UUID uuid) {
         List<MessageContainer> messages;
         if (prefix) {
             messages = getMessagesWithPrefix(key);
@@ -43,10 +45,13 @@ public class LanguageContainer {
             messages = getMessages(key);
         }
 
-        final var toReturn = new LinkedList<TextComponent>();
+        final var toReturn = new LinkedList<Component>();
         messages.forEach(container -> {
-            if (uuid != null && pluginCore.getType() == PluginCore.ServerType.PAPER) {
-                final var player = pluginCore.getWrapperFor(uuid);
+            placeholders.forEach((placeholderKey, value) ->
+                    container.setText(container.getText().replaceAll(placeholderKey, value)));
+
+            if (uuid != null && pluginWrapper.getType() == PluginType.BUKKIT) {
+                final var player = pluginWrapper.getWrapperFor(uuid);
                 if (player.isEmpty()) {
                     log.debug("Player is null, returning normal component.");
                     toReturn.add(container.toComponent(placeholders));
@@ -81,7 +86,7 @@ public class LanguageContainer {
         try {
             if (node.isList()) {
                 log.debug("Node is list!");
-                final var messages = node.getList(new TypeToken<MessageContainer>() {
+                final var messages = node.getList(new TypeToken<String>() {
                 });
 
                 if (messages == null || messages.isEmpty()) {
@@ -89,18 +94,20 @@ public class LanguageContainer {
                     return List.of(notFoundContainer);
                 }
 
-                messages.removeIf(container -> container.getText().startsWith("[_SKIP]"));
-                return messages;
+                return messages.stream()
+                        .filter(text -> !text.startsWith("<_SKIP>"))
+                        .map(MessageContainer::new)
+                        .collect(Collectors.toList());
             }
 
             log.debug("Node is not a list!");
-            final var message = node.get(TypeToken.get(MessageContainer.class));
-            if (message == null || message.getText().startsWith("[_SKIP]")) {
+            final var message = node.getString();
+            if (message == null || message.startsWith("<_SKIP>")) {
                 log.debug("Not found any translation!");
                 return List.of(notFoundContainer);
             }
 
-            return List.of(message);
+            return List.of(new MessageContainer(message));
         } catch (SerializationException e) {
             return List.of(notFoundContainer);
         }

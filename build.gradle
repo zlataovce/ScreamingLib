@@ -1,14 +1,18 @@
 buildscript {
     ext {
-        core_version = "1.0.1-SNAPSHOT" //version for core module
-        commands_version = "2.0.0-SNAPSHOT" //version for commands module
-        main_version = "1.2.1-SNAPSHOT" //main version of the ScreamingLib
+        core_version = "1.0.1" //version for core module
+        commands_version = "2.0.0" //version for commands module
+        main_version = "1.2.1" //main version of the ScreamingLib
 
         guice_version = "4.2.3"
         configurate_version = "4.0.0-SNAPSHOT"
         papi_version = "2.10.9"
         netty_version = "4.1.42.Final"
         slf4j_version = "1.7.25"
+
+        adventure_version = "4.1.1"
+        adventure_platforms_version = "4.0.0-SNAPSHOT"
+        adventure_configurate_version = "4.2.0-SNAPSHOT"
     }
 
     repositories {
@@ -54,5 +58,9 @@ subprojects {
         compileOnly group: 'me.clip', name: 'placeholderapi', version: papi_version
     }
 
-    sourceCompatibility = '11'
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(11)
+        }
+    }
 }

@@ -3,19 +3,17 @@ package org.screamingsandals.lib.core.lang;
 import com.google.inject.Inject;
 import lombok.Getter;
 import lombok.Setter;
-import org.screamingsandals.lib.core.plugin.PluginCore;
 import org.screamingsandals.lib.core.lang.registry.FileRegistry;
 import org.screamingsandals.lib.core.lang.registry.LanguageRegistry;
 import org.screamingsandals.lib.core.lang.registry.PlayerRegistry;
 import org.screamingsandals.lib.core.lang.storage.LanguageContainer;
+import org.screamingsandals.lib.core.wrapper.plugin.PluginWrapper;
 
 import java.io.File;
-
 
 /**
  * LanguageBase, might change this..
  * Right now, this is used for configuring language itself.
- *
  */
 @Getter
 @Setter
@@ -23,7 +21,7 @@ public class LanguageBase {
     public static String FALLBACK_LANGUAGE = "en";
     private static LanguageBase instance;
 
-    private final PluginCore pluginCore;
+    private final PluginWrapper pluginWrapper;
     private final FileRegistry fileRegistry;
     private final LanguageRegistry languageRegistry;
     private final PlayerRegistry playerRegistry;
@@ -34,10 +32,10 @@ public class LanguageBase {
     private File customDataFolder;
 
     @Inject
-    public LanguageBase(PluginCore pluginCore, FileRegistry fileRegistry,
+    public LanguageBase(PluginWrapper pluginWrapper, FileRegistry fileRegistry,
                         LanguageRegistry languageRegistry, PlayerRegistry playerRegistry) {
         instance = this;
-        this.pluginCore = pluginCore;
+        this.pluginWrapper = pluginWrapper;
         this.fileRegistry = fileRegistry;
         this.languageRegistry = languageRegistry;
         this.playerRegistry = playerRegistry;
@@ -67,8 +65,8 @@ public class LanguageBase {
         return instance.playerRegistry;
     }
 
-    public static PluginCore getPluginCore() {
-        return instance.pluginCore;
+    public static PluginWrapper getPluginWrapper() {
+        return instance.pluginWrapper;
     }
 
     private LanguageContainer getDefaultOrFirstAvailableContainer() {
