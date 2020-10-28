@@ -28,7 +28,6 @@ defaultTasks 'clean', 'screamCompile'
 allprojects {
     group = 'org.screamingsandals.lib'
     version = main_version
-    sourceCompatibility = JavaVersion.VERSION_11
 }
 
 subprojects {
@@ -58,4 +57,6 @@ subprojects {
 
         compileOnly group: 'me.clip', name: 'placeholderapi', version: papi_version
     }
+
+    sourceCompatibility = JavaVersion.VERSION_11
 }
