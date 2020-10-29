@@ -1,7 +1,6 @@
 version = commands_version
 
 dependencies {
-    shade project(":core")
-
+    api project(":core")
     annotationProcessor 'com.velocitypowered:velocity-api:1.1.0'
 }
