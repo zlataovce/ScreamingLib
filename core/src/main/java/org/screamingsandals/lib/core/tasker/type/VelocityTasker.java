@@ -1,6 +1,7 @@
 package org.screamingsandals.lib.core.tasker.type;
 
 import com.google.inject.Inject;
+import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.scheduler.ScheduledTask;
 import com.velocitypowered.api.scheduler.Scheduler;
 import com.velocitypowered.api.scheduler.TaskStatus;
@@ -14,9 +15,9 @@ public class VelocityTasker extends AbstractTasker implements Tasker {
     private final Scheduler scheduler;
 
     @Inject
-    public VelocityTasker(PluginWrapper pluginWrapper, Scheduler scheduler) {
+    public VelocityTasker(PluginWrapper pluginWrapper, ProxyServer proxyServer) {
         this.pluginWrapper = pluginWrapper;
-        this.scheduler = scheduler;
+        this.scheduler = proxyServer.getScheduler();
     }
 
     @Override

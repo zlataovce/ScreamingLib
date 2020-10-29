@@ -26,6 +26,7 @@ public class TaskerModule extends AbstractModule {
                 break;
             case VELOCITY:
                 bind(Tasker.class).to(VelocityTasker.class).asEagerSingleton();
+                break;
             default:
                 throw new UnsupportedOperationException("Unsupported plugin type!");
         }

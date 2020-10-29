@@ -29,4 +29,9 @@ public interface PlayerWrapper<T> extends SenderWrapper<T> {
         Preconditions.checkNotNull(instance, "instance");
         return BungeeWrapper.of(instance);
     }
+
+    static PlayerWrapper<com.velocitypowered.api.proxy.Player> of(com.velocitypowered.api.proxy.Player instance) {
+        Preconditions.checkNotNull(instance, "instance");
+        return VelocityPlayerWrapper.of(instance);
+    }
 }

@@ -73,6 +73,11 @@ public interface SenderWrapper<T> {
         } catch (Throwable ignored) {
         }
 
+        try {
+            return (PlayerWrapper<K>) PlayerWrapper.of((com.velocitypowered.api.proxy.Player) getInstance());
+        } catch (Throwable ignored) {
+        }
+
         return null;
     }
 

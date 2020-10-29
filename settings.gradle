@@ -14,4 +14,5 @@ include(':signs')
 project(':signs').projectDir = file('signs')
 include(':update_checker')
 project(':update_checker').projectDir = file('update_checker')
+include 'visual'
 

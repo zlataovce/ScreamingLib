@@ -103,28 +103,6 @@ public class BossbarHolder{
         bukkitBossbar.setVisible(visible);
     }
 
-    public void setProgress(double value) {
-        this.progress = value;
-        var editableProgress = value;
-
-        if (editableProgress > 100) {
-            editableProgress = 100;
-        } else if (editableProgress < 0) {
-            editableProgress = 0;
-        }
-
-        bukkitBossbar.setProgress(editableProgress / 100);
-    }
-
-    public void setProgress(double value, double max) {
-        if (max == -1) {
-            setProgress(100);
-            return;
-        }
-
-        final var toSet = (value / max) * 100;
-        setProgress(toSet);
-    }
 
     public void updateAll() {
         bukkitBossbar.setTitle(title);
