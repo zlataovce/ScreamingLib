@@ -6,6 +6,7 @@ import org.screamingsandals.lib.core.config.SConfig;
 import org.screamingsandals.lib.core.lang.LanguageBase;
 import org.screamingsandals.lib.core.lang.storage.LanguageContainer;
 import org.screamingsandals.lib.core.papi.PlaceholderConfig;
+import org.screamingsandals.lib.core.wrapper.player.PlayerWrapperService;
 import org.screamingsandals.lib.core.wrapper.plugin.PluginWrapper;
 import org.slf4j.Logger;
 
@@ -28,14 +29,17 @@ import java.util.zip.ZipInputStream;
 @Data
 public class FileRegistry {
     private final PluginWrapper pluginWrapper;
+    private final PlayerWrapperService playerWrapper;
     private final LanguageRegistry registry;
     private final PlaceholderConfig papiConfig;
     private final Logger log;
     private String customPrefix;
 
     @Inject
-    public FileRegistry(PluginWrapper pluginWrapper, LanguageRegistry registry, PlaceholderConfig papiConfig) {
+    public FileRegistry(PluginWrapper pluginWrapper, PlayerWrapperService playerWrapper,
+                        LanguageRegistry registry, PlaceholderConfig papiConfig) {
         this.pluginWrapper = pluginWrapper;
+        this.playerWrapper = playerWrapper;
         this.registry = registry;
         this.papiConfig = papiConfig;
         this.log = pluginWrapper.getLog();
@@ -76,7 +80,7 @@ public class FileRegistry {
                 registry.getOriginal(code)
                         .orElse(registry.getOriginal(LanguageBase.FALLBACK_LANGUAGE)
                                 .orElse(null)),
-                code, customPrefix, papiConfig, pluginWrapper));
+                code, customPrefix, papiConfig, pluginWrapper, playerWrapper));
     }
 
     public void removeLanguage(String code) {
@@ -90,7 +94,7 @@ public class FileRegistry {
                 final var code = sConfig.node("language_code").getString();
 
                 registry.registerInternal(code,
-                        new LanguageContainer(sConfig, null, code, customPrefix, papiConfig, pluginWrapper));
+                        new LanguageContainer(sConfig, null, code, customPrefix, papiConfig, pluginWrapper, playerWrapper));
             } catch (Exception e) {
                 log.warn("Registering of internal language file failed!", e);
             }

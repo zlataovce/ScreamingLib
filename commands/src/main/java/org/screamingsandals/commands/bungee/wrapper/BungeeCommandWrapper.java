@@ -2,6 +2,7 @@ package org.screamingsandals.commands.bungee.wrapper;
 
 import com.google.inject.Inject;
 import net.md_5.bungee.api.CommandSender;
+import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.TabExecutor;
 import org.screamingsandals.commands.api.command.CommandContext;
@@ -9,6 +10,7 @@ import org.screamingsandals.commands.api.command.CommandNode;
 import org.screamingsandals.commands.api.registry.HandlerRegistry;
 import org.screamingsandals.commands.api.wrapper.WrappedCommand;
 import org.screamingsandals.commands.core.command.AbstractCommandWrapper;
+import org.screamingsandals.lib.core.wrapper.player.PlayerWrapper;
 import org.screamingsandals.lib.core.wrapper.sender.SenderWrapper;
 
 import java.util.Arrays;
@@ -49,13 +51,27 @@ public class BungeeCommandWrapper extends AbstractCommandWrapper<Command> {
 
         @Override
         public void execute(CommandSender sender, String[] args) {
-            handlerRegistry.getCommandHandler().handle(
-                    new CommandContext(SenderWrapper.of(sender), node, Arrays.asList(args)));
+            CommandContext context;
+
+            if (sender instanceof ProxiedPlayer) {
+                context = new CommandContext(PlayerWrapper.of(sender), node, Arrays.asList(args));
+            } else {
+                context = new CommandContext(SenderWrapper.of(sender), node, Arrays.asList(args));
+            }
+
+            handlerRegistry.getCommandHandler().handle(context);
         }
 
         @Override
         public Iterable<String> onTabComplete(CommandSender sender, String[] args) {
-            final var context = new CommandContext(SenderWrapper.of(sender), node, Arrays.asList(args));
+            CommandContext context;
+
+            if (sender instanceof ProxiedPlayer) {
+                context = new CommandContext(PlayerWrapper.of(sender), node, Arrays.asList(args));
+            } else {
+                context = new CommandContext(SenderWrapper.of(sender), node, Arrays.asList(args));
+            }
+
             final var toReturn = handlerRegistry.getTabHandler().handle(context);
 
             return Objects.requireNonNullElseGet(toReturn, List::of);

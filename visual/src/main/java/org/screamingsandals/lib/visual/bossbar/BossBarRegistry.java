@@ -1,7 +1,7 @@
 package org.screamingsandals.lib.visual.bossbar;
 
 import net.kyori.adventure.bossbar.BossBar;
-import org.screamingsandals.lib.core.wrapper.sender.PlayerWrapper;
+import org.screamingsandals.lib.core.wrapper.player.PlayerWrapper;
 
 public interface BossBarRegistry {
 

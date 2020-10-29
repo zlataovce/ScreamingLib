@@ -2,15 +2,15 @@ package org.screamingsandals.lib.core.wrapper.plugin;
 
 import com.google.inject.Injector;
 import com.google.inject.Module;
-import org.bukkit.event.Listener;
-import org.bukkit.plugin.java.JavaPlugin;
+import net.md_5.bungee.api.plugin.Listener;
+import net.md_5.bungee.api.plugin.Plugin;
 import org.screamingsandals.lib.core.wrapper.sender.SenderWrapper;
 import org.slf4j.Logger;
 
 import java.nio.file.Path;
 import java.util.List;
 
-public abstract class SBukkitPlugin extends JavaPlugin implements PluginWrapper {
+public abstract class SBungeePlugin extends Plugin implements PluginWrapper {
 
     public abstract List<Module> modules();
 
@@ -37,7 +37,6 @@ public abstract class SBukkitPlugin extends JavaPlugin implements PluginWrapper 
 
     @Override
     public Logger getLog() {
-        //todo: support spigot
         return getSLF4JLogger();
     }
 
@@ -59,23 +58,26 @@ public abstract class SBukkitPlugin extends JavaPlugin implements PluginWrapper 
 
     @Override
     public SenderWrapper<?> getConsoleWrapper() {
-        return SenderWrapper.of(getServer().getConsoleSender());
+        return SenderWrapper.of(getProxy().getConsole());
     }
 
     @Override
     public boolean isPluginEnabled(String pluginName) {
-        return getServer().getPluginManager().isPluginEnabled(pluginName);
+        return getProxy().getPluginManager().getPlugin(pluginName) != null;
     }
 
     @Override
     public PluginType getType() {
-        return PluginType.BUKKIT;
+        return PluginType.BUNGEE;
     }
 
     @Override
     public void registerListener(Object listener) {
-        if (listener instanceof Listener) {
-            getServer().getPluginManager().registerEvents((Listener) listener, getPlugin());
+        try {
+            getSLF4JLogger().debug("Registering new listener");
+            getProxy().getPluginManager().registerListener(getPlugin(), (Listener) listener);
+        } catch (Exception e) {
+            getSLF4JLogger().warn("Not instance of listener", e);
         }
     }
 }

@@ -6,7 +6,6 @@ import org.screamingsandals.commands.bukkit.guice.BukkitCommandModule;
 import org.screamingsandals.commands.bungee.guice.BungeeCommandModule;
 import org.screamingsandals.commands.core.auto.CommandClassScanner;
 import org.screamingsandals.commands.velocity.guice.VelocityCommandModule;
-import org.screamingsandals.lib.core.ScreamingModule;
 import org.screamingsandals.lib.core.wrapper.plugin.PluginWrapper;
 import org.slf4j.LoggerFactory;
 
@@ -16,8 +15,6 @@ public class CommandModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        install(new ScreamingModule(pluginWrapper));
-
         LoggerFactory.getLogger("test").warn("type: {}", pluginWrapper.getType());
         switch (pluginWrapper.getType()) {
             case BUKKIT:

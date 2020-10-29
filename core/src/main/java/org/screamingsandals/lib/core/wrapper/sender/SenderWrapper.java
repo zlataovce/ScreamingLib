@@ -3,17 +3,16 @@ package org.screamingsandals.lib.core.wrapper.sender;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.identity.Identity;
 import net.kyori.adventure.text.Component;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
-import org.bukkit.entity.Player;
+import org.screamingsandals.lib.core.wrapper.player.PlayerWrapper;
 
 public interface SenderWrapper<T> {
 
     static SenderWrapper<org.bukkit.command.CommandSender> of(org.bukkit.command.CommandSender commandSender) {
-        return BukkitWrapper.of(commandSender);
+        return SenderWrapperService.wrap(commandSender);
     }
 
     static SenderWrapper<net.md_5.bungee.api.CommandSender> of(net.md_5.bungee.api.CommandSender commandSender) {
-        return BungeeWrapper.of(commandSender);
+        return SenderWrapperService.wrap(commandSender);
     }
 
     static SenderWrapper<com.velocitypowered.api.command.CommandSource> of(com.velocitypowered.api.command.CommandSource commandSource) {
@@ -61,27 +60,15 @@ public interface SenderWrapper<T> {
     /**
      * @return Player wrapper of this sender.
      */
-    @SuppressWarnings("unchecked")
     default <K> PlayerWrapper<K> getPlayer() {
-        try {
-            return (PlayerWrapper<K>) PlayerWrapper.of((Player) getInstance());
-        } catch (Throwable ignored) {
-        }
-
-        try {
-            return (PlayerWrapper<K>) PlayerWrapper.of((ProxiedPlayer) getInstance());
-        } catch (Throwable ignored) {
-        }
-
-        try {
-            return (PlayerWrapper<K>) PlayerWrapper.of((com.velocitypowered.api.proxy.Player) getInstance());
-        } catch (Throwable ignored) {
+        if (isPlayer()) {
+            return (PlayerWrapper<K>) this;
         }
 
         return null;
     }
 
     default boolean isPlayer() {
-        return getPlayer() != null;
+        return this instanceof PlayerWrapper;
     }
 }

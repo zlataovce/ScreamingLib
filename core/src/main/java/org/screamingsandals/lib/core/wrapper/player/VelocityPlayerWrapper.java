@@ -1,18 +1,15 @@
-package org.screamingsandals.lib.core.wrapper.sender;
+package org.screamingsandals.lib.core.wrapper.player;
 
 import com.velocitypowered.api.proxy.Player;
 import net.kyori.adventure.text.Component;
+import org.screamingsandals.lib.core.wrapper.sender.AbstractSender;
 
 import java.util.UUID;
 
-public class VelocityPlayerWrapper extends AbstractSender<Player> implements PlayerWrapper<Player> {
+class VelocityPlayerWrapper extends AbstractSender<Player> implements PlayerWrapper<Player> {
 
     VelocityPlayerWrapper(Player instance) {
         super(instance, instance);
-    }
-
-    public static VelocityPlayerWrapper of(Player instance) {
-        return new VelocityPlayerWrapper(instance);
     }
 
     @Override
