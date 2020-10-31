@@ -16,7 +16,6 @@ public class SCBuilder {
     }
 
     public static CommandBuilder command(String name) {
-
         return new CommandBuilder(instance.registry, Preconditions.checkNotNull(name, "name"));
     }
 

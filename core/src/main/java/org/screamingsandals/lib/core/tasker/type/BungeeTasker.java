@@ -20,7 +20,7 @@ public class BungeeTasker extends AbstractTasker implements Tasker {
 
     @Override
     public boolean hasStopped(BaseTask baseTask) {
-        return getRunningTasks().get(baseTask) == null;
+        return runningTasks.get(baseTask) == null;
 
         //TODO: make a way to get the tas status
     }
@@ -33,7 +33,7 @@ public class BungeeTasker extends AbstractTasker implements Tasker {
     @Override
     public BaseTask runTaskAsync(BaseTask baseTask) {
         try {
-            getRunningTasks().put(baseTask, scheduler.runAsync(plugin, baseTask));
+            runningTasks.put(baseTask, scheduler.runAsync(plugin, baseTask));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -43,7 +43,7 @@ public class BungeeTasker extends AbstractTasker implements Tasker {
     @Override
     public BaseTask runTaskLater(BaseTask baseTask, int delay, TaskerUnit taskerUnit) {
         try {
-            getRunningTasks().put(baseTask, scheduler.schedule(
+            runningTasks.put(baseTask, scheduler.schedule(
                     plugin, baseTask, taskerUnit.getTime(delay), taskerUnit.getTimeUnit()));
         } catch (Exception e) {
             e.printStackTrace();
@@ -54,7 +54,7 @@ public class BungeeTasker extends AbstractTasker implements Tasker {
     @Override
     public BaseTask runTaskRepeater(BaseTask baseTask, int delay, int period, TaskerUnit taskerUnit) {
         try {
-            getRunningTasks().put(baseTask, scheduler.schedule(
+            runningTasks.put(baseTask, scheduler.schedule(
                     plugin, baseTask, taskerUnit.getTime(delay), taskerUnit.getTime(period), taskerUnit.getTimeUnit()));
         } catch (Exception e) {
             e.printStackTrace();

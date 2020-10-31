@@ -37,7 +37,7 @@ public class VelocityTasker extends AbstractTasker implements Tasker {
         final var builder = scheduler.buildTask(pluginWrapper.getPlugin(), baseTask);
         final var scheduled = builder.schedule();
 
-        getRunningTasks().put(baseTask, scheduled);
+        runningTasks.put(baseTask, scheduled);
         return baseTask;
     }
 
@@ -48,7 +48,7 @@ public class VelocityTasker extends AbstractTasker implements Tasker {
 
         final var scheduled = builder.schedule();
 
-        getRunningTasks().put(baseTask, scheduled);
+        runningTasks.put(baseTask, scheduled);
         return baseTask;
     }
 
@@ -60,7 +60,7 @@ public class VelocityTasker extends AbstractTasker implements Tasker {
 
         final var scheduled = builder.schedule();
 
-        getRunningTasks().put(baseTask, scheduled);
+        runningTasks.put(baseTask, scheduled);
         return baseTask;
     }
 }

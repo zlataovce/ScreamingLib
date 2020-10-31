@@ -2,15 +2,12 @@ package org.screamingsandals.lib.core.tasker;
 
 import org.screamingsandals.lib.core.tasker.task.BaseTask;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Wrapper for Bukkit's and Bungee's task runners
  */
 public interface Tasker {
-    Map<BaseTask, Object> runningTasks = new HashMap<>();
-
     /**
      * Map of right now running tasks!
      *

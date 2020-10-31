@@ -13,8 +13,8 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class AbstractTasker implements Tasker {
+    protected final Map<BaseTask, Object> runningTasks = new ConcurrentHashMap<>();
     protected final Logger log = LoggerFactory.getLogger(Tasker.class);
-    private final Map<BaseTask, Object> runningTasks = new ConcurrentHashMap<>();
 
     /**
      * This is here for the {@link BaseTask#runTask()} and so on...
@@ -33,7 +33,7 @@ public abstract class AbstractTasker implements Tasker {
 
     @Override
     public void destroy() {
-        getRunningTasks().keySet().forEach(baseTask -> {
+        runningTasks.keySet().forEach(baseTask -> {
             if (baseTask == null) {
                 return;
             }

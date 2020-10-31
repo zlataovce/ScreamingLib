@@ -1,8 +1,8 @@
 buildscript {
     ext {
-        core_version = "1.0.3" //version for core module
-        commands_version = "2.0.2" //version for commands module
-        main_version = "1.2.2" //main version of the ScreamingLib
+        core_version = "1.0.4" //version for core module
+        commands_version = "2.0.3" //version for commands module
+        main_version = "1.2.3" //main version of the ScreamingLib
 
         guice_version = "4.2.3"
         configurate_version = "4.0.0-SNAPSHOT"
@@ -19,7 +19,7 @@ buildscript {
         maven { url 'https://repo.screamingsandals.org/repository/maven-public' }
     }
     dependencies {
-        classpath 'org.screamingsandals.gradle.builder:screaming-plugin-builder:1.0.24'
+        classpath 'org.screamingsandals.gradle.builder:screaming-plugin-builder:1.0.25'
     }
 }
 

@@ -106,7 +106,7 @@ public class HologramManager implements Listener {
         }
 
         final var copy = new ArrayList<>(activeHolograms);
-        for (Hologram hologram : copy) {
+        for (var hologram : copy) {
             if (hologram.isEmpty() || !hologram.hasViewers()) {
                 activeHolograms.remove(hologram);
                 continue;
@@ -168,7 +168,7 @@ public class HologramManager implements Listener {
         }
 
         final var copy = new ArrayList<>(activeHolograms);
-        for (Hologram hologram : copy) {
+        for (var hologram : copy) {
             if (hologram.isEmpty() || !hologram.hasViewers()) {
                 activeHolograms.remove(hologram);
                 continue;
