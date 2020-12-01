@@ -1,0 +1,5 @@
+name: test
+main: org.screamingsandals.lib.visual.Test
+version: 1
+api-version: 1.13
+author: iamceph
