@@ -1,29 +1,16 @@
 package org.screamingsandals.lib.gamecore.language;
 
-import org.screamingsandals.lib.lang.Base;
 
-import java.io.File;
+import org.screamingsandals.lib.core.lang.LanguageBase;
+import org.screamingsandals.lib.core.lang.registry.FileRegistry;
+import org.screamingsandals.lib.core.lang.registry.LanguageRegistry;
+import org.screamingsandals.lib.core.lang.registry.PlayerRegistry;
+import org.screamingsandals.lib.core.wrapper.plugin.PluginWrapper;
 
-public class GameLanguage extends Base {
+public class GameLanguage extends LanguageBase {
 
-    public GameLanguage(Object plugin) {
-        super(plugin);
-    }
-
-    public GameLanguage(Object plugin, String globalLanguage) {
-        super(plugin, globalLanguage);
-    }
-
-    public GameLanguage(Object plugin, String globalLanguage, String customPrefix) {
-        super(plugin, globalLanguage, customPrefix);
-    }
-
-    public GameLanguage(Object plugin, File customDataFolder) {
-        super(plugin, customDataFolder);
-    }
-
-    public GameLanguage(Object plugin, String globalLanguage, File customDataFolder, String customPrefix) {
-        super(plugin, globalLanguage, customDataFolder, customPrefix);
+    public GameLanguage(PluginWrapper pluginWrapper, FileRegistry fileRegistry, LanguageRegistry languageRegistry, PlayerRegistry playerRegistry) {
+        super(pluginWrapper, fileRegistry, languageRegistry, playerRegistry);
     }
 
     public static GameMessage mpr() {
@@ -56,6 +43,6 @@ public class GameLanguage extends Base {
     }
 
     public static GameMessage m(String key, String def, boolean prefix) {
-        return new GameMessage(key, Base.getGlobalStorage(), def, prefix);
+        return new GameMessage(key, def, prefix);
     }
 }

@@ -26,14 +26,14 @@ public class HologramManager extends org.screamingsandals.lib.nms.holograms.Holo
     }
 
     public GameHologram spawnHologram(GameFrame gameFrame, HologramType type, List<Player> players, Location loc, List<String> lines) {
-        final var hologram = new GameHologram(gameFrame, type, this, players, loc, lines);
+        final var hologram = new GameHologram(gameFrame, type, players, loc, lines);
         gameHolograms.put(gameFrame.getUuid(), hologram);
 
         return hologram;
     }
 
     public GameHologram spawnTouchableHologram(GameFrame gameFrame, HologramType type, List<Player> players, Location loc, List<String> lines) {
-        final var hologram = new GameHologram(gameFrame, type,this, players, loc, lines, true);
+        final var hologram = new GameHologram(gameFrame, type, players, loc, lines, true);
         gameHolograms.put(gameFrame.getUuid(), hologram);
 
         return hologram;

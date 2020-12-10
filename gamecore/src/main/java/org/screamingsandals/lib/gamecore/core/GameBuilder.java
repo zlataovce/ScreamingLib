@@ -16,7 +16,7 @@ import org.screamingsandals.lib.gamecore.adapter.WorldAdapter;
 import org.screamingsandals.lib.gamecore.config.GameConfig;
 import org.screamingsandals.lib.gamecore.resources.ResourceSpawner;
 import org.screamingsandals.lib.gamecore.resources.SpawnerEditor;
-import org.screamingsandals.lib.gamecore.resources.SpawnerHologramHandler;
+import org.screamingsandals.lib.gamecore.resources.SpawnerHologramCallback;
 import org.screamingsandals.lib.gamecore.store.GameStore;
 import org.screamingsandals.lib.gamecore.team.GameTeam;
 import org.screamingsandals.lib.gamecore.utils.GameUtils;
@@ -277,7 +277,7 @@ public abstract class GameBuilder<T extends GameFrame> {
         final var gameHologram = GameCore.getHologramManager()
                 .spawnTouchableHologram(currentGame, HologramType.BUILDER_SPAWNER, player, spawner.getLocation().getLocation(), lines);
         gameHologram.setSpawnerUuid(spawner.getUuid());
-        gameHologram.setHandler(new SpawnerHologramHandler());
+        gameHologram.setHandler(new SpawnerHologramCallback());
     }
 
     private void setWorldBorder(LocationAdapter adapter, BaseWorld baseWorld, int whichOne) {

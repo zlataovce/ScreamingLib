@@ -1,14 +1,11 @@
 package org.screamingsandals.lib.gamecore.commands;
 
 import org.bukkit.entity.Player;
-import org.screamingsandals.lib.commands.common.RegisterCommand;
-import org.screamingsandals.lib.commands.common.SubCommandBuilder;
-import org.screamingsandals.lib.commands.common.interfaces.ScreamingCommand;
+import org.screamingsandals.commands.api.auto.ScreamingCommand;
 import org.screamingsandals.lib.gamecore.GameCore;
 import org.screamingsandals.lib.gamecore.adapter.LocationAdapter;
 import org.screamingsandals.lib.gamecore.resources.SpawnerEditor;
 import org.screamingsandals.lib.gamecore.utils.GameUtils;
-import org.screamingsandals.lib.tasker.TaskerTime;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -23,17 +20,17 @@ import static org.screamingsandals.lib.gamecore.language.GameLanguage.mpr;
  *
  * Spawner editor should only run while game with the spawners is in the EDIT mode!
  */
-@RegisterCommand
+
 public class SpawnerEditorCommand implements ScreamingCommand {
     private final List<String> actions = new LinkedList<>();
 
     @Override
     public void register() {
         final var gameCore = GameCore.getInstance();
-        SubCommandBuilder.bukkitSubCommand()
+        /*SubCommandBuilder.bukkitSubCommand()
                 .createSubCommand(gameCore.getMainCommandName(), "sedit", gameCore.getAdminPermissions(), List.of("spawner-editor", "se"))
                 .handleSubPlayerCommand(this::handleCommand)
-                .handleSubPlayerTab(this::handleTab);
+                .handleSubPlayerTab(this::handleTab);*/
 
         actions.addAll(List.of("max-spawned", "amount", "period", "team", "location", "time-unit", "save", "exit"));
     }
@@ -114,7 +111,7 @@ public class SpawnerEditorCommand implements ScreamingCommand {
                 }
                 case "time-unit": {
                     if (canBeTime(value.toLowerCase())) {
-                        spawner.setTimeUnit(TaskerTime.valueOf(value.toUpperCase()));
+                        //spawner.setTimeUnit(TaskerUnit.valueOf(value.toUpperCase()));
                         mpr("game-builder.spawners.editor.changed")
                                 .replace("%value%", action)
                                 .replace("%newValue%", value)

@@ -39,7 +39,7 @@ public interface SenderWrapper<T> {
      *
      * @return an {@link Audience}
      */
-    Audience getAudience();+
+    Audience getAudience();
 
     /**
      * Sends message with {@link Identity}.nil()

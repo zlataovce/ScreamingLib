@@ -2,6 +2,7 @@ package org.screamingsandals.lib.gamecore.language;
 
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.screamingsandals.lib.core.lang.message.Message;
 import org.screamingsandals.lib.gamecore.core.GameFrame;
 import org.screamingsandals.lib.lang.message.Message;
 import org.screamingsandals.lib.lang.storage.Storage;
@@ -16,28 +17,8 @@ import static org.screamingsandals.lib.reflection.Reflection.*;
 public class GameMessage extends Message {
     private GameFrame gameFrame;
 
-    public GameMessage(String key, Storage storage) {
+    public GameMessage(String key, String def, boolean prefix) {
         super(key, storage, (String) null, false);
-    }
-
-    public GameMessage(String key, Storage storage, boolean prefix) {
-        super(key, storage, (String) null, prefix);
-    }
-
-    public GameMessage(String key, Storage storage, String def) {
-        super(key, storage, def, false);
-    }
-
-    public GameMessage(String key, Storage storage, String def, boolean prefix) {
-        super(key, storage, def, prefix);
-    }
-
-    public GameMessage(String key, Storage storage, List<String> defList) {
-        super(key, storage, defList, false);
-    }
-
-    public GameMessage(String key, Storage storage, List<String> defList, boolean prefix) {
-        super(key, storage, defList, prefix);
     }
 
     public GameMessage game(GameFrame gameFrame) {
