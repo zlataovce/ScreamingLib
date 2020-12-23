@@ -26,14 +26,16 @@ public class Hologram {
     private Location location;
     private boolean touchable;
 
-    public Hologram(List<Player> players, Location location, List<String> lines) {
-        this(players, location, lines, false);
-    }
-
-    public Hologram(List<Player> players, Location location, List<String> lines, boolean touchable) {
+    /*
+    Only via HologramManager
+     */
+    Hologram(List<Player> players, List<String> lines,
+                    List<TouchCallback> touchCallbacks, Location location) {
         this.lines.addAll(lines);
+        this.callbacks.addAll(touchCallbacks);
         this.location = location;
-        this.touchable = touchable;
+
+        this.touchable = !touchCallbacks.isEmpty();
 
         updateEntities();
         addViewers(players);
@@ -51,18 +53,14 @@ public class Hologram {
         return lines.isEmpty();
     }
 
-    public Hologram addHandler(TouchCallback handler) {
-        if (handler != null) {
-            callbacks.add(handler);
-        }
+    public Hologram removeCallbacks() {
+        callbacks.clear();
         return this;
     }
 
-    public Hologram setHandler(TouchCallback handler) {
-        callbacks.clear();
-
-        if (handler != null) {
-            callbacks.add(handler);
+    public Hologram addCallback(TouchCallback callback) {
+        if (callback != null) {
+            callbacks.add(callback);
         }
         return this;
     }
@@ -128,14 +126,6 @@ public class Hologram {
         return this;
     }
 
-    public Hologram destroy() {
-        lines.clear();
-        updateEntities();
-        viewers.clear();
-
-        return this;
-    }
-
     public boolean handleTouch(Player player, int entityId) {
         if (!touchable) {
             return false;
@@ -156,6 +146,16 @@ public class Hologram {
             }
         }
         return false;
+    }
+
+    /*
+    Package private, only manager should have the powa
+    to destroy hologram
+     */
+    void destroy() {
+        lines.clear();
+        updateEntities();
+        viewers.clear();
     }
 
     private void updateEntities() {

@@ -1,9 +1,5 @@
 buildscript {
     ext {
-        core_version = "1.0.5-SNAPSHOT" //version for core module
-        commands_version = "2.0.4-SNAPSHOT" //version for commands module
-        main_version = "1.2.5" //main version of the ScreamingLib
-
         guice_version = "4.2.3"
         configurate_version = "4.0.0-SNAPSHOT"
         papi_version = "2.10.9"
@@ -27,7 +23,7 @@ defaultTasks 'clean', 'screamCompile'
 
 allprojects {
     group = 'org.screamingsandals.lib'
-    version = main_version
+    version = '1.2.6'
 }
 
 subprojects {

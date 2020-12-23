@@ -2,8 +2,6 @@ rootProject.name = "ScreamingLib"
 
 include(':bossbars')
 project(':bossbars').projectDir = file('bossbars')
-include(':commands')
-project(':commands').projectDir = file('commands')
 include(':core')
 project(':core').projectDir = file('core')
 include(':dependencies')

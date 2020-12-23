@@ -1,5 +1,3 @@
-version = core_version
-
 dependencies {
     api paperlib()
 
