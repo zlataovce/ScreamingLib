@@ -22,8 +22,8 @@ public class HologramManager {
 
     public HologramManager(Plugin plugin) {
         this.plugin = plugin;
-        this.plugin.getServer().getPluginManager().registerEvents(
-                new HologramEventHandler(this, plugin), this.plugin);
+        plugin.getServer().getPluginManager().registerEvents(
+                new HologramEventHandler(this, plugin), plugin);
 
         packetInboundListener = new AutoPacketInboundListener(plugin) {
             @Override
@@ -55,10 +55,6 @@ public class HologramManager {
         activeHolograms.remove(hologram);
     }
 
-    public boolean areAnyHologramsActive() {
-        return !activeHolograms.isEmpty();
-    }
-
     @RequiredArgsConstructor
     public static class HologramBuilder {
         private final HologramManager manager;
@@ -87,12 +83,12 @@ public class HologramManager {
             return this;
         }
 
-        public HologramBuilder viewers(List<Player>  viewers) {
+        public HologramBuilder viewers(List<Player> viewers) {
             this.viewers.addAll(viewers);
             return this;
         }
 
-        public HologramBuilder callbacks(List<TouchCallback>  callbacks) {
+        public HologramBuilder callbacks(List<TouchCallback> callbacks) {
             this.callbacks.addAll(callbacks);
             return this;
         }

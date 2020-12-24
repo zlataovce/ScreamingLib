@@ -2,12 +2,12 @@ package org.screamingsandals.lib.nms.entity;
 
 import org.bukkit.Location;
 import org.bukkit.entity.ArmorStand;
+import org.bukkit.inventory.ItemStack;
 import org.screamingsandals.lib.reflect.SReflect;
 
-import static org.screamingsandals.lib.nms.utils.ClassStorage.NMS.EntityArmorStand;
-import static org.screamingsandals.lib.nms.utils.ClassStorage.NMS.World;
+import static org.screamingsandals.lib.nms.utils.ClassStorage.NMS.*;
 import static org.screamingsandals.lib.nms.utils.ClassStorage.getHandle;
-import static org.screamingsandals.lib.reflect.SReflect.getMethod;
+import static org.screamingsandals.lib.reflect.SReflect.*;
 
 public class ArmorStandNMS extends EntityNMS {
 
@@ -26,6 +26,17 @@ public class ArmorStandNMS extends EntityNMS {
         this(EntityArmorStand.getConstructor(World, double.class, double.class, double.class)
                 .newInstance(getMethod(loc.getWorld(), "getHandle").invoke(), loc.getX(), loc.getY(), loc.getZ()));
         this.setLocation(loc); // Update rotation
+    }
+
+    public void setHelmet(ItemStack itemStack) {
+        final var headSlot = findEnumConstant(EnumItemSlot, "HEAD");
+        getMethod(getField(handler, "equipment"), "armorItems", EnumItemSlot, boolean.class)
+                .invoke(headSlot, getHandle(itemStack), true);
+    }
+
+    public ItemStack getHelmet() {
+        final var headSlot = findEnumConstant(EnumItemSlot, "HEAD");
+        return (ItemStack) getMethod(getField(handler, "armorItems"), "getSlot", EnumItemSlot).invoke(headSlot);
     }
 
     public void setSmall(boolean small) {

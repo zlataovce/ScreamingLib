@@ -75,7 +75,8 @@ public class Hologram {
                 viewers.add(player);
                 try {
                     update(player, getAllSpawnPackets(), true);
-                } catch (Throwable ignored) {
+                } catch (Throwable ex) {
+                    ex.printStackTrace();
                 }
             }
         });

@@ -1,7 +1,6 @@
 package org.screamingsandals.lib.nms.holograms;
 
 import lombok.RequiredArgsConstructor;
-import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
@@ -21,7 +20,7 @@ public class HologramEventHandler implements Listener {
 
     @EventHandler
     public void onWorldChange(PlayerChangedWorldEvent event) {
-        if (!manager.areAnyHologramsActive()) {
+        if (manager.getActiveHolograms().isEmpty()) {
             return;
         }
 
@@ -50,7 +49,7 @@ public class HologramEventHandler implements Listener {
 
     @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent event) {
-        if (!manager.areAnyHologramsActive()) {
+        if (manager.getActiveHolograms().isEmpty()) {
             return;
         }
 
@@ -85,7 +84,7 @@ public class HologramEventHandler implements Listener {
 
     @EventHandler
     public void onMove(PlayerMoveEvent event) {
-        if (!manager.areAnyHologramsActive()) {
+        if (manager.getActiveHolograms().isEmpty()) {
             return;
         }
 
@@ -94,7 +93,7 @@ public class HologramEventHandler implements Listener {
 
     @EventHandler
     public void onPlayerTeleport(PlayerTeleportEvent event) {
-        if (!manager.areAnyHologramsActive()
+        if (manager.getActiveHolograms().isEmpty()
                 || !event.getFrom().getWorld().equals(event.getTo().getWorld())) {
             return;
         }
@@ -123,16 +122,9 @@ public class HologramEventHandler implements Listener {
                         hologram.update(player, List.of(hologram.getFullDestroyPacket()), false);
                     }
                 }
-            } catch (Throwable ignored) {
+            } catch (Throwable ex) {
+                ex.printStackTrace();
             }
         });
-    }
-
-    public void hologramTest(Location location) {
-        final var newHologram = manager.newHologram()
-                .lines("Test", "Fuck u", "kokot")
-                .callbacks((callback, hologram) -> callback.sendMessage("Dont touch me!"))
-                .location(location)
-                .build();
     }
 }
