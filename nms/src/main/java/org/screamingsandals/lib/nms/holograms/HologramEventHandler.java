@@ -26,7 +26,6 @@ public class HologramEventHandler implements Listener {
 
         List.copyOf(manager.getActiveHolograms()).forEach(hologram -> {
             if (hologram.isEmpty() || !hologram.hasViewers()) {
-                manager.removeHologram(hologram);
                 return;
             }
 
@@ -55,7 +54,6 @@ public class HologramEventHandler implements Listener {
 
         List.copyOf(manager.getActiveHolograms()).forEach(hologram -> {
             if (hologram.isEmpty() || !hologram.hasViewers()) {
-                manager.removeHologram(hologram);
                 return;
             }
 
@@ -104,7 +102,6 @@ public class HologramEventHandler implements Listener {
     private void handleHologram(PlayerMoveEvent event) {
         List.copyOf(manager.getActiveHolograms()).forEach(hologram -> {
             if (hologram.isEmpty() || !hologram.hasViewers()) {
-                manager.removeHologram(hologram);
                 return;
             }
 

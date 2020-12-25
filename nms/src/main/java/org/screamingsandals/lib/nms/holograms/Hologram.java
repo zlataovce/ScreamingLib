@@ -141,12 +141,7 @@ public class Hologram {
     }
 
     public boolean checkId(int id) {
-        for (var entity : entities) {
-            if (entity.getId() == id) {
-                return true;
-            }
-        }
-        return false;
+        return entities.stream().anyMatch(entity -> entity.getId() == id);
     }
 
     /*
