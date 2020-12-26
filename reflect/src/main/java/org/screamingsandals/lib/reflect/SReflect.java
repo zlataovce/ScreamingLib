@@ -11,7 +11,7 @@ public class SReflect {
         for (var className : classNames) {
             try {
                 for (var rule : replaceRules.entrySet()) {
-                    className = className.replaceAll(rule.getKey(), rule.getValue());
+                    className = className.replace(rule.getKey(), rule.getValue());
                 }
                 return Class.forName(className);
             } catch (ClassNotFoundException ignored) {
