@@ -110,7 +110,8 @@ public class HologramEventHandler implements Listener {
                 final var viewers = hologram.getViewers();
                 final var location = hologram.getLocation();
 
-                if (viewers.contains(player) && player.getWorld().equals(location.getWorld())) {
+                if (viewers.contains(player)
+                        && player.getWorld().equals(location.getWorld())) {
                     if (event.getTo().distanceSquared(location) < VISIBILITY_DISTANCE_SQUARED
                             && event.getFrom().distanceSquared(location) >= VISIBILITY_DISTANCE_SQUARED) {
                         hologram.update(player, hologram.getAllSpawnPackets(), false);

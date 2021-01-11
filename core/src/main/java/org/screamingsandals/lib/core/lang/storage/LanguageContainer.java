@@ -36,7 +36,7 @@ public class LanguageContainer {
         this.config = Preconditions.checkNotNull(config, "config");
         this.fallback = fallback;
         this.code = Preconditions.checkNotNull(code, "code");
-        this.prefix = Objects.requireNonNullElseGet(prefix, () -> Preconditions.checkNotNull(config.node("prefix").getString()));
+        this.prefix = Objects.requireNonNullElseGet(prefix, () -> config.node("prefix").getString());
         this.papiConfig = papiConfig;
         this.pluginWrapper = pluginWrapper;
         this.wrapperService = wrapperService;
